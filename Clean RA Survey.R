@@ -38,4 +38,5 @@ RAdata$Response_ID <- toupper(RAdata$Response_ID)
 RAdata$Participant_ID <- toupper(RAdata$Participant_ID)
 
 #delete columns
-RAdata <- subset(RAdata, select = -c(Start_Date, End_Date, Status, IP_Address, Progress, Duration_Seconds, Finished, Last_Name, First_Name, Email, Reference, Distribution_Channel, User_Language))
+
+RAdata <- subset(RAdata, select = -c(Start_Date, End_Date, Status, IP_Address, Progress, Duration_Seconds, Finished, Last_Name, First_Name, Email, Reference, Distribution_Channel, User_Language, Longitude, Latitude, Response_ID))
