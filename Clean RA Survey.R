@@ -37,6 +37,10 @@ names(RAdata)[names(RAdata) == "Q9"] <- "Additional_Considerations"
 #Convert columns to uppercase
 RAdata$Response_ID <- toupper(RAdata$Response_ID)
 RAdata$Participant_ID <- toupper(RAdata$Participant_ID)
+RAdata$First_Patient <- toupper(RAdata$First_Patient)
+RAdata$Tom_Actor <- toupper(RAdata$Tom_Actor)
+RAdata$Freddie_Actor <- toupper(RAdata$Freddie_Actor)
+RAdata$Tech_Difficulties <- toupper(RAdata$Tech_Difficulties)
 
 #delete columns
 RAdata <- subset(RAdata, select = -c(Start_Date, End_Date, Status, IP_Address, Progress, Duration_Seconds, Finished, Last_Name, First_Name, Email, Reference, Distribution_Channel, User_Language, Longitude, Latitude, Response_ID))
@@ -44,6 +48,27 @@ RAdata <- subset(RAdata, select = -c(Start_Date, End_Date, Status, IP_Address, P
 #split Tom Actor column into Tom Actor Name and Tom Actor Race
 RAdata <- RAdata %>% separate(Tom_Actor, c("Tom_Actor_Name", "Tom_Actor_Race"), " ")
 
-#combine Study Id Qs
-data3$Study_ID = paste(data3$Study_ID_Q1, data3$Study_ID_Q2, data3$Study_ID_Q3, data3$Study_ID_Q4, sep="")
+#split Freddie Actor column into Freddie Actor Name and Freddie Actor Race
+RAdata <- RAdata %>% separate(Freddie_Actor, c("Freddie_Actor_Name", "Freddie_Actors_Race"), " ")
+
+#create First Patient Race column (if First Patient = TOM then First Patient Race = Tom Actor Race)
+RAdata$First_Patient_Race <- ifelse(RAdata$First_Patient=="TOM", RAdata$Tom_Actor_Race, ifelse(RAdata$First_Patient=="FREDDIE", RAdata$Freddie_Actor_Race, NA))
+
+#create Tech Difficulties Order column (if Tech Difficulties = First Patient then Tech Difficulties Order = "First", "Second")
+RAdata$Tech_Difficulties_Order <- ifelse(RAdata$Tech_Difficulties==RAdata$First_Patient, "First", "Second")
+
+#create Tech Difficulties Race column (if Tech Difficulties = TOM then Tech Difficulties Race  = Tom Actor Race)
+RAdata$Tech_Difficulties_Race <- ifelse(RAdata$Tech_Difficulties=="TOM", RAdata$Tom_Actor_Race, ifelse(RAdata$Tech_Difficulties=="FREDDIE", RAdata$Freddie_Actor_Race, NA))
+
+#create Freddie Race column (if Tom Race = Black then Freddie Race = White and if Tom Race = White then Freddie Race = Black)
+RAdata$Freddie_Actor_Race <- ifelse(RAdata$Tom_Actor_Race=="(BLACK)", "(WHITE)", ifelse(RAdata$Tom_Actor_Race=="(WHITE)", "(BLACK)", NA))
+
+#delete Freddie Actors Race extra column
+RAdata <- subset(RAdata, select = -c(Freddie_Actors_Race))
+
+
+
+
+
+
 
