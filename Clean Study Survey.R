@@ -153,5 +153,5 @@ data3$Study_ID = paste(data3$Study_ID_Q1, data3$Study_ID_Q2, data3$Study_ID_Q3, 
 
 #delete columns
 data3 <- subset(data3, select = -c(Start_Date, End_Date, Response_Type, Finished, Progress, Distribution_Channel, User_Language))
-data3 <- subset(data3, select = -c(File_ID, File_Name, File_Size, File_Type))
-
+data3 <- subset(data3, select = -c(File_ID, File_Name, File_Size, File_Type, Informed_Consent, Response_ID, Duration_Seconds, Study_ID_Summary))
+data3 <- subset(data3, select = -c(RA_Select_Cat, RA_Select_Panama, RA_Select_Smoothies, RA_Select_Shoe, RA_Select_Bear, RA_Select_Sand, RA_Select_Cocoon))
