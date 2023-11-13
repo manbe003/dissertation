@@ -118,7 +118,4 @@ prescreen_survey <- prescreen_survey[-c(87, 90, 91, 92, 93, 94, 95, 96, 99, 100,
 prescreen_survey <- prescreen_survey[-c(111, 114, 115, 116, 117, 118, 119, 120, 121, 123, 124, 127, 128, 129, 131, 133, 136, 137, 138, 139, 140, 141, 142), ]
 
 #Cleaned Database
-?write.csv
 write.csv(prescreen_survey, "prescreen cleaning.csv")
-
-getwd()
