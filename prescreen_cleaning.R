@@ -117,5 +117,11 @@ prescreen_survey <- prescreen_survey[-c(71, 72, 73, 74, 76, 78, 79, 82, 83, 85, 
 prescreen_survey <- prescreen_survey[-c(87, 90, 91, 92, 93, 94, 95, 96, 99, 100, 102, 104, 107, 108, 112, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 133, 135, 138, 139, 140, 142, 143, 144, 146, 147, 148, 150, 151, 152, 153, 154, 155), ]
 prescreen_survey <- prescreen_survey[-c(111, 114, 115, 116, 117, 118, 119, 120, 121, 123, 124, 127, 128, 129, 131, 133, 136, 137, 138, 139, 140, 141, 142), ]
 
+#Moving ID to front
+prescreen_survey <- prescreen_survey[ , c("Personal_ID_pre", names(prescreen_survey)[names(prescreen_survey) != "Personal_ID_pre"])]
+
+#Delete duplicate rows
+prescreen_survey <- prescreen_survey[-c(28, 34, 44, 53, 74, 84), ]
+
 #Cleaned Database
 write.csv(prescreen_survey, "prescreen_cleaning.csv")
