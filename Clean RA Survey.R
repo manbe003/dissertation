@@ -15,7 +15,7 @@ names(RAdata)[names(RAdata) == "StartDate"] <- "Start_Date"
 names(RAdata)[names(RAdata) == "EndDate"] <- "End_Date"
 names(RAdata)[names(RAdata) == "IPAddress"] <- "IP_Address"
 names(RAdata)[names(RAdata) == "Duration..in.seconds."] <- "Duration_Seconds"
-names(RAdata)[names(RAdata) == "RecordedDate"] <- "Recorded_Date"
+names(RAdata)[names(RAdata) == "RecordedDate"] <- "Recorded_Date_RA"
 names(RAdata)[names(RAdata) == "ResponseId"] <- "Response_ID"
 names(RAdata)[names(RAdata) == "RecipientLastName"] <- "Last_Name"
 names(RAdata)[names(RAdata) == "RecipientFirstName"] <- "First_Name"
@@ -25,7 +25,7 @@ names(RAdata)[names(RAdata) == "LocationLatitude"] <- "Latitude"
 names(RAdata)[names(RAdata) == "LocationLongitude"] <- "Longitude"
 names(RAdata)[names(RAdata) == "DistributionChannel"] <- "Distribution_Channel"
 names(RAdata)[names(RAdata) == "UserLanguage"] <- "User_Language"
-names(RAdata)[names(RAdata) == "Q1"] <- "Participant_ID"
+names(RAdata)[names(RAdata) == "Q1"] <- "Study_ID"
 names(RAdata)[names(RAdata) == "Q11"] <- "Lunch_SUD_Change"
 names(RAdata)[names(RAdata) == "Q2"] <- "First_Patient"
 names(RAdata)[names(RAdata) == "Q3"] <- "Tom_Actor"
@@ -36,7 +36,7 @@ names(RAdata)[names(RAdata) == "Q9"] <- "Additional_Considerations"
 
 #Convert columns to uppercase
 RAdata$Response_ID <- toupper(RAdata$Response_ID)
-RAdata$Participant_ID <- toupper(RAdata$Participant_ID)
+RAdata$Study_ID <- toupper(RAdata$Study_ID)
 RAdata$First_Patient <- toupper(RAdata$First_Patient)
 RAdata$Tom_Actor <- toupper(RAdata$Tom_Actor)
 RAdata$Freddie_Actor <- toupper(RAdata$Freddie_Actor)
@@ -66,9 +66,17 @@ RAdata$Freddie_Actor_Race <- ifelse(RAdata$Tom_Actor_Race=="(BLACK)", "(WHITE)",
 #delete Freddie Actors Race extra column
 RAdata <- subset(RAdata, select = -c(Freddie_Actors_Race))
 
+<<<<<<< HEAD
 write.csv(RAdata, "RA_survey_clean.csv")
 
 
+=======
+#relocate Study_ID column 
+RAdata <- select(RAdata, Study_ID, everything())
+
+#write csv
+write.csv(RASurveydata,"RASurveydata.csv")
+>>>>>>> 39556df406e28f88b78bf1dac987bf6fdfae5603
 
 
 
