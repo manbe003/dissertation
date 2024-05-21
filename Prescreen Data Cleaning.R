@@ -1,7 +1,7 @@
 #Data cleaning for prescreen survey 
 
 #Setting working directory 
-prescreen_survey <- read.csv("~/tmp/Dissertation/prescreen_survey.csv", header=FALSE)
+prescreen_survey <- read.csv("prescreen_survey.csv", header=FALSE)
 
 #Change the column names 
 names(prescreen_survey)[names(prescreen_survey) =="V1"] <- "Start_Date"
@@ -109,3 +109,4 @@ prescreen_survey <- subset(prescreen_survey, select = -c(Finished, Recorded_Date
 prescreen_survey <- subset(prescreen_survey, select = -c(Distribution_Channel, User_Language))
 prescreen_survey <- subset(prescreen_survey, select = -c(Personal_ID_Q1, Personal_ID_Q2, Personal_ID_Q3, Personal_ID_Q4))
 
+write.csv(prescreen_survey, "prescreen_survey_clean.csv")

@@ -1,6 +1,6 @@
 #set working directory
 # Or ~/Desktop/Code it Up/
-setwd("/Users/admin/Desktop/Code it Up/")
+setwd("~/Desktop/research related/dissertation/dissertation")
 
 #readr package
 library (readr)
@@ -66,7 +66,7 @@ RAdata$Freddie_Actor_Race <- ifelse(RAdata$Tom_Actor_Race=="(BLACK)", "(WHITE)",
 #delete Freddie Actors Race extra column
 RAdata <- subset(RAdata, select = -c(Freddie_Actors_Race))
 
-
+write.csv(RAdata, "RA_survey_clean.csv")
 
 
 

@@ -1,12 +1,13 @@
 #set working directory
 # Or ~/Desktop/Code it Up/
-setwd("/Users/admin/Desktop/Code it Up/")
+setwd("~/Desktop/research related/dissertation/dissertation")
 
 #readr package
 library (readr)
+library(iatgen)
 
 #import data and recognize as data3
-data3 <-read.csv("StudySurvey.csv", header = TRUE, sep = ",")
+data3 <-read.csv("Study_survey.csv", header = TRUE, sep = ",")
 
 #Rename Columns 
 names(data3)[names(data3) == "StartDate"] <- "Start_Date"
@@ -155,3 +156,33 @@ data3$Study_ID = paste(data3$Study_ID_Q1, data3$Study_ID_Q2, data3$Study_ID_Q3, 
 data3 <- subset(data3, select = -c(Start_Date, End_Date, Response_Type, Finished, Progress, Distribution_Channel, User_Language))
 data3 <- subset(data3, select = -c(File_ID, File_Name, File_Size, File_Type, Informed_Consent, Response_ID, Duration_Seconds, Study_ID_Summary))
 data3 <- subset(data3, select = -c(RA_Select_Cat, RA_Select_Panama, RA_Select_Smoothies, RA_Select_Shoe, RA_Select_Bear, RA_Select_Sand, RA_Select_Cocoon))
+data3 <- subset(data3, select = -c(Study_ID_Q1, Study_ID_Q2, Study_ID_Q3, Study_ID_Q4))
+
+#make IAT d score 
+### Collapse  IAT data down ####
+dat<-data3
+dat$compatible.crit <- combineIATfourblocks(dat$Q4.RP4, dat$Q18.LP4, dat$Q14.RN7, dat$Q28.LN7)
+dat$incompatible.crit <- combineIATfourblocks(dat$Q7.RP7, dat$Q21.LP7, dat$Q11.RN4, dat$Q25.LN4)
+
+### Collapse  IAT practice blocks ####
+dat$compatible.prac<- combineIATfourblocks(dat$Q3.RP3, dat$Q17.LP3, dat$Q13.RN6, dat$Q27.LN6)
+dat$incompatible.prac <- combineIATfourblocks(dat$Q6.RP6, dat$Q20.LP6, dat$Q10.RN3, dat$Q24.LN3)
+
+clean <- cleanIAT(prac1=dat$compatible.prac, 
+                  crit1=dat$compatible.crit, 
+                  prac2=dat$incompatible.prac, 
+                  crit2=dat$incompatible.crit, 
+                  
+                  timeout.drop=TRUE, 
+                  timeout.ms=10000, 
+                  
+                  fasttrial.drop=FALSE, 
+                  
+                  fastprt.drop=TRUE, 
+                  fastprt.percent=.10, 
+                  fastprt.ms=300, 
+                  
+                  error.penalty=FALSE)
+
+dat$D <- clean$D
+write.csv(dat,"Study_survey_clean.csv")
